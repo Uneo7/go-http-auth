@@ -1,4 +1,4 @@
-This is a forked version of abbot/go-http-auth which has been modified to work with gorilla/mux
+This is a forked version of abbot/go-http-auth which has been modified to work with gorilla/mux.  The changes were fairly minor and involved making AuthenticatedRequest's Request member a pointer (and modifing the usages of Request to reflect this change)
 
 gorilla/mux example
 -------------------
@@ -46,6 +46,7 @@ gorilla/mux example
 
         log.Fatal(http.ListenAndServe(":9876", router))
     }
+
 
 
 Original README.md:
