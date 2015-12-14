@@ -1,3 +1,56 @@
+This is a forked version of abbot/go-http-auth which has been modified to work with gorilla/mux
+
+gorilla/mux example
+-------------------
+
+    func test(w http.ResponseWriter, r *auth.AuthenticatedRequest) {
+
+    }
+
+    type Route struct {
+        Name        string
+        Method      string
+        Pattern     string
+        HandlerFunc auth.AuthenticatedHandlerFunc
+    }
+
+    type Routes []Route
+
+    func NewRouter() *mux.Router {
+        h := auth.HtpasswdFileProvider(HTPASSWD_FILE)
+        a := auth.NewBasicAuthenticator("Basic Realm", h)
+
+        router := mux.NewRouter().StrictSlash(true)
+        for _, route := range routes {
+            router.
+                Methods(route.Method).
+                Path(route.Pattern).
+                Name(route.Name).
+                Handler(a.Wrap(route.HandlerFunc))
+        }
+
+        return router
+    }
+
+    var routes = Routes{
+        Route{
+            "Stats",
+            "GET",
+            "/test",
+            test,
+        },
+    }
+
+    func main() {
+        router := NewRouter()
+
+        log.Fatal(http.ListenAndServe(":9876", router))
+    }
+
+
+Original README.md:
+
+
 HTTP Authentication implementation in Go
 ========================================
 

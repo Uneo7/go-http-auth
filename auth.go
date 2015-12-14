@@ -99,6 +99,6 @@ func FromContext(ctx context.Context) *Info {
 func JustCheck(auth AuthenticatorInterface, wrapped http.HandlerFunc) http.HandlerFunc {
 	return auth.Wrap(func(w http.ResponseWriter, ar *AuthenticatedRequest) {
 		ar.Header.Set("X-Authenticated-Username", ar.Username)
-		wrapped(w, &ar.Request)
+		wrapped(w, ar.Request)
 	})
 }
